@@ -253,6 +253,23 @@ function Carousel(baseProps: CarouselProps, ref) {
       : null
   );
 
+  let slideToPrev = () =>
+    slideTo({
+      targetIndex: prevIndex,
+      isNegative: true,
+      isManual: true,
+    });
+
+  let slideToNext = () =>
+    slideTo({
+      targetIndex: nextIndex,
+      isManual: true,
+    });
+
+  if (rtl) {
+    [slideToPrev, slideToNext] = [slideToNext, slideToPrev];
+  }
+
   return (
     <ResizeObserver onResize={computeStyle}>
       <div
@@ -352,19 +369,8 @@ function Carousel(baseProps: CarouselProps, ref) {
             direction={direction}
             showArrow={showArrow}
             icons={icons}
-            prev={() =>
-              slideTo({
-                targetIndex: prevIndex,
-                isNegative: true,
-                isManual: true,
-              })
-            }
-            next={() =>
-              slideTo({
-                targetIndex: nextIndex,
-                isManual: true,
-              })
-            }
+            prev={slideToPrev}
+            next={slideToNext}
           />
         )}
       </div>
